@@ -74,7 +74,10 @@
             </tr>
         </thead>
         <tbody>
-            @php $total = 0; @endphp
+            @php 
+                $totalIncome = 0; 
+                $totalExpense = 0; 
+            @endphp
             @foreach($transactions as $transaction)
                 <tr>
                     <td>{{ $transaction->transaction_date->format('d/m/Y') }}</td>
@@ -82,16 +85,30 @@
                     <td>{{ $transaction->account->name }}</td>
                     <td>{{ $transaction->description ?? '-' }}</td>
                     <td class="text-right {{ $transaction->type === 'income' ? 'income' : 'expense' }}">
-                        Rp {{ number_format($transaction->amount, 0, ',', '.') }}
+                        {{ $transaction->type === 'income' ? '+' : '-' }} Rp {{ number_format($transaction->amount, 0, ',', '.') }}
                     </td>
                 </tr>
-                @php $total += $transaction->amount; @endphp
+                @php 
+                    if ($transaction->type === 'income') {
+                        $totalIncome += $transaction->amount;
+                    } else {
+                        $totalExpense += $transaction->amount;
+                    }
+                @endphp
             @endforeach
         </tbody>
         <tfoot>
+            <tr>
+                <td colspan="4" class="text-right">Total Pemasukan</td>
+                <td class="text-right income">+ Rp {{ number_format($totalIncome, 0, ',', '.') }}</td>
+            </tr>
+            <tr>
+                <td colspan="4" class="text-right">Total Pengeluaran</td>
+                <td class="text-right expense">- Rp {{ number_format($totalExpense, 0, ',', '.') }}</td>
+            </tr>
             <tr class="total-row">
-                <td colspan="4" class="text-right">TOTAL</td>
-                <td class="text-right">Rp {{ number_format($total, 0, ',', '.') }}</td>
+                <td colspan="4" class="text-right">SALDO</td>
+                <td class="text-right">Rp {{ number_format($totalIncome - $totalExpense, 0, ',', '.') }}</td>
             </tr>
         </tfoot>
     </table>

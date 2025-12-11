@@ -62,18 +62,20 @@
                             <x-input-error :messages="$errors->get('proof_file')" class="mt-2" />
                         </div>
 
-                        <div class="flex items-center justify-between">
-                            <form method="POST" action="{{ route('transactions.destroy', $transaction) }}" onsubmit="return confirm('Yakin ingin menghapus transaksi ini?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-red-600 hover:text-red-800">Hapus Transaksi</button>
-                            </form>
-                            <div class="flex items-center gap-4">
-                                <a href="{{ route('transactions.index') }}" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">Batal</a>
-                                <x-primary-button>{{ __('Update Transaksi') }}</x-primary-button>
-                            </div>
+                        <div class="flex items-center justify-end gap-4">
+                            <a href="{{ route('transactions.index') }}" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100">Batal</a>
+                            <x-primary-button>{{ __('Update Transaksi') }}</x-primary-button>
                         </div>
                     </form>
+
+                    {{-- Delete form placed OUTSIDE the update form to avoid nested form issue --}}
+                    <div class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+                        <form method="POST" action="{{ route('transactions.destroy', $transaction) }}" onsubmit="return confirm('Yakin ingin menghapus transaksi ini?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-600 hover:text-red-800 text-sm">🗑️ Hapus Transaksi</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
