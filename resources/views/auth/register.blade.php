@@ -3,7 +3,7 @@
         <!-- Mobile Logo -->
         <div class="lg:hidden flex items-center justify-center gap-3 mb-10">
             <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-14 h-14 rounded-2xl shadow-lg shadow-cyan-200 object-cover">
-            <span class="text-2xl font-bold text-slate-900 dark:text-white">UKM Keuangan</span>
+            <span class="text-2xl font-bold text-slate-900 dark:text-white">UMKM Keuangan</span>
         </div>
 
         <!-- Card Container -->
@@ -137,7 +137,7 @@
 
         <!-- Footer -->
         <p class="mt-8 text-center text-sm text-slate-500">
-            © {{ date('Y') }} UKM Keuangan. Kelola keuangan dengan mudah.
+            © {{ date('Y') }} UMKM Keuangan. Kelola keuangan dengan mudah.
         </p>
     </div>
 </x-guest-layout>

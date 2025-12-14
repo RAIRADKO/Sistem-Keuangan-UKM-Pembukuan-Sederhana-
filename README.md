@@ -1,6 +1,6 @@
-# 📘 Panduan Penggunaan Sistem Keuangan UKM
+# 📘 Panduan Penggunaan Sistem Keuangan UMKM
 
-Dokumen ini berisi panduan lengkap penggunaan **Sistem Keuangan UKM** untuk membantu Anda mengelola pembukuan usaha secara sederhana, cepat, dan efisien.
+Dokumen ini berisi panduan lengkap penggunaan **Sistem Keuangan UMKM** untuk membantu Anda mengelola pembukuan usaha secara sederhana, cepat, dan efisien.
 
 ---
 

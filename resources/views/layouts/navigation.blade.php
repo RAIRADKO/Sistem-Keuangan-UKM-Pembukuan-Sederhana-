@@ -5,7 +5,7 @@
                 <!-- Logo -->
                 <a href="{{ route('dashboard') }}" class="flex items-center gap-3 group">
                     <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-10 h-10 rounded-xl shadow-lg group-hover:shadow-xl group-hover:scale-105 transition-all duration-200 object-cover">
-                    <span class="hidden sm:inline text-lg font-bold text-slate-800 dark:text-white">UKM Keuangan</span>
+                    <span class="hidden sm:inline text-lg font-bold text-slate-800 dark:text-white">UMKM Keuangan</span>
                 </a>
 
                 <!-- Navigation Links - Clean & minimal -->

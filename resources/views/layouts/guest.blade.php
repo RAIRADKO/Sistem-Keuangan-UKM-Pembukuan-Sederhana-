@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'UKM Keuangan') }}</title>
+        <title>{{ config('app.name', 'UMKM Keuangan') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,7 +46,7 @@
                     <!-- Logo -->
                     <div class="flex items-center gap-4 mb-14">
                         <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-14 h-14 rounded-2xl shadow-xl object-cover">
-                        <span class="text-2xl font-bold text-white">UKM Keuangan</span>
+                        <span class="text-2xl font-bold text-white">UMKM Keuangan</span>
                     </div>
 
                     <!-- Tagline -->
