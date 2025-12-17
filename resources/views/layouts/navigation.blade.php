@@ -13,11 +13,59 @@
                     <a href="{{ route('dashboard') }}" class="nav-link-premium {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                         Dashboard
                     </a>
+
+                    <!-- POS Mode - Quick Access -->
+                    <a href="{{ route('pos.index') }}" class="nav-link-premium {{ request()->routeIs('pos.*') ? 'active' : '' }} flex items-center">
+                        <svg class="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                        </svg>
+                        Kasir
+                    </a>
+
                     <a href="{{ route('transactions.index') }}" class="nav-link-premium {{ request()->routeIs('transactions.*') ? 'active' : '' }}">
                         Transaksi
                     </a>
+                    
+                    <!-- Kasbon Dropdown -->
+                    <x-dropdown align="left" width="48">
+                        <x-slot name="trigger">
+                            <button class="nav-link-premium {{ request()->routeIs('debts.*') || request()->routeIs('contacts.*') ? 'active' : '' }} inline-flex items-center">
+                                Kasbon
+                                <svg class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </button>
+                        </x-slot>
+
+                        <x-slot name="content">
+                            <x-dropdown-link :href="route('debts.index')">Hutang & Piutang</x-dropdown-link>
+                            <x-dropdown-link :href="route('contacts.index')">Kontak</x-dropdown-link>
+                        </x-slot>
+                    </x-dropdown>
+
+                    <!-- Inventory Dropdown -->
+                    <x-dropdown align="left" width="48">
+                        <x-slot name="trigger">
+                            <button class="nav-link-premium {{ request()->routeIs('products.*') || request()->routeIs('product-categories.*') ? 'active' : '' }} inline-flex items-center">
+                                Inventori
+                                <svg class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </button>
+                        </x-slot>
+
+                        <x-slot name="content">
+                            <x-dropdown-link :href="route('products.index')">Produk</x-dropdown-link>
+                            <x-dropdown-link :href="route('product-categories.index')">Kategori Produk</x-dropdown-link>
+                        </x-slot>
+                    </x-dropdown>
+
+                    <a href="{{ route('budgets.index') }}" class="nav-link-premium {{ request()->routeIs('budgets.*') ? 'active' : '' }}">
+                        Anggaran
+                    </a>
+
                     <a href="{{ route('accounts.index') }}" class="nav-link-premium {{ request()->routeIs('accounts.*') ? 'active' : '' }}">
-                        Kategori
+                        Akun
                     </a>
 
                     <!-- Reports Dropdown -->
@@ -133,8 +181,16 @@
     <div :class="{'block': open, 'hidden': !open}" class="hidden sm:hidden border-t border-slate-100 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg">
         <div class="py-3 space-y-1 px-4">
             <a href="{{ route('dashboard') }}" class="block px-4 py-2.5 rounded-xl text-sm font-medium {{ request()->routeIs('dashboard') ? 'bg-gradient-to-r from-cyan-500 to-teal-500 text-white' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }} transition-all duration-200">Dashboard</a>
+            <a href="{{ route('pos.index') }}" class="block px-4 py-2.5 rounded-xl text-sm font-medium {{ request()->routeIs('pos.*') ? 'bg-gradient-to-r from-cyan-500 to-teal-500 text-white' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }} transition-all duration-200 flex items-center">
+                <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                Mode Kasir
+            </a>
             <a href="{{ route('transactions.index') }}" class="block px-4 py-2.5 rounded-xl text-sm font-medium {{ request()->routeIs('transactions.*') ? 'bg-gradient-to-r from-cyan-500 to-teal-500 text-white' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }} transition-all duration-200">Transaksi</a>
-            <a href="{{ route('accounts.index') }}" class="block px-4 py-2.5 rounded-xl text-sm font-medium {{ request()->routeIs('accounts.*') ? 'bg-gradient-to-r from-cyan-500 to-teal-500 text-white' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }} transition-all duration-200">Kategori</a>
+            <a href="{{ route('debts.index') }}" class="block px-4 py-2.5 rounded-xl text-sm font-medium {{ request()->routeIs('debts.*') ? 'bg-gradient-to-r from-cyan-500 to-teal-500 text-white' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }} transition-all duration-200">Hutang & Piutang</a>
+            <a href="{{ route('contacts.index') }}" class="block px-4 py-2.5 rounded-xl text-sm font-medium {{ request()->routeIs('contacts.*') ? 'bg-gradient-to-r from-cyan-500 to-teal-500 text-white' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }} transition-all duration-200">Kontak</a>
+            <a href="{{ route('products.index') }}" class="block px-4 py-2.5 rounded-xl text-sm font-medium {{ request()->routeIs('products.*') ? 'bg-gradient-to-r from-cyan-500 to-teal-500 text-white' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }} transition-all duration-200">Produk</a>
+            <a href="{{ route('budgets.index') }}" class="block px-4 py-2.5 rounded-xl text-sm font-medium {{ request()->routeIs('budgets.*') ? 'bg-gradient-to-r from-cyan-500 to-teal-500 text-white' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }} transition-all duration-200">Anggaran</a>
+            <a href="{{ route('accounts.index') }}" class="block px-4 py-2.5 rounded-xl text-sm font-medium {{ request()->routeIs('accounts.*') ? 'bg-gradient-to-r from-cyan-500 to-teal-500 text-white' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }} transition-all duration-200">Akun</a>
             <a href="{{ route('reports.income') }}" class="block px-4 py-2.5 rounded-xl text-sm font-medium {{ request()->routeIs('reports.income') ? 'bg-gradient-to-r from-cyan-500 to-teal-500 text-white' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }} transition-all duration-200">Laporan Pemasukan</a>
             <a href="{{ route('reports.expense') }}" class="block px-4 py-2.5 rounded-xl text-sm font-medium {{ request()->routeIs('reports.expense') ? 'bg-gradient-to-r from-cyan-500 to-teal-500 text-white' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }} transition-all duration-200">Laporan Pengeluaran</a>
             <a href="{{ route('reports.profit-loss') }}" class="block px-4 py-2.5 rounded-xl text-sm font-medium {{ request()->routeIs('reports.profit-loss') ? 'bg-gradient-to-r from-cyan-500 to-teal-500 text-white' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }} transition-all duration-200">Laba Rugi</a>

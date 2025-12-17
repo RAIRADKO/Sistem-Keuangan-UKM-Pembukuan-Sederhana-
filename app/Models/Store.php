@@ -45,6 +45,38 @@ class Store extends Model
     }
 
     /**
+     * Get contacts for this store
+     */
+    public function contacts(): HasMany
+    {
+        return $this->hasMany(Contact::class);
+    }
+
+    /**
+     * Get debts for this store
+     */
+    public function debts(): HasMany
+    {
+        return $this->hasMany(Debt::class);
+    }
+
+    /**
+     * Get product categories for this store
+     */
+    public function productCategories(): HasMany
+    {
+        return $this->hasMany(ProductCategory::class);
+    }
+
+    /**
+     * Get products for this store
+     */
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
+    }
+
+    /**
      * Get owners of this store
      */
     public function owners(): BelongsToMany
@@ -55,12 +87,74 @@ class Store extends Model
     }
 
     /**
-     * Get staff of this store
+     * Get managers of this store
+     */
+    public function managers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'store_user')
+            ->wherePivot('role', 'manager')
+            ->withTimestamps();
+    }
+
+    /**
+     * Get kasirs of this store
+     */
+    public function kasirs(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'store_user')
+            ->wherePivot('role', 'kasir')
+            ->withTimestamps();
+    }
+
+    /**
+     * Get staff of this store (legacy - returns kasirs)
      */
     public function staff(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'store_user')
-            ->wherePivot('role', 'staff')
+            ->wherePivot('role', 'kasir')
             ->withTimestamps();
+    }
+
+    /**
+     * Get user's role in this store
+     */
+    public function getUserRole(User $user): ?string
+    {
+        $pivot = $this->users()->where('user_id', $user->id)->first();
+        return $pivot ? $pivot->pivot->role : null;
+    }
+
+    /**
+     * Get total outstanding payables (hutang)
+     */
+    public function getTotalPayablesAttribute(): float
+    {
+        return $this->debts()
+            ->where('type', 'payable')
+            ->whereIn('status', ['unpaid', 'partial'])
+            ->sum(\DB::raw('total_amount - paid_amount'));
+    }
+
+    /**
+     * Get total outstanding receivables (piutang)
+     */
+    public function getTotalReceivablesAttribute(): float
+    {
+        return $this->debts()
+            ->where('type', 'receivable')
+            ->whereIn('status', ['unpaid', 'partial'])
+            ->sum(\DB::raw('total_amount - paid_amount'));
+    }
+
+    /**
+     * Get products with low stock
+     */
+    public function getLowStockProductsAttribute()
+    {
+        return $this->products()
+            ->active()
+            ->lowStock()
+            ->get();
     }
 }

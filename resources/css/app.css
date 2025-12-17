@@ -475,6 +475,22 @@
         @apply bg-cyan-900/40 text-cyan-300 ring-cyan-500/30;
     }
 
+    .badge-secondary {
+        @apply bg-slate-100 text-slate-700 ring-1 ring-slate-300/30;
+    }
+
+    .dark .badge-secondary {
+        @apply bg-slate-700 text-slate-300 ring-slate-500/30;
+    }
+
+    .badge-purple {
+        @apply bg-purple-100 text-purple-700 ring-1 ring-purple-500/20;
+    }
+
+    .dark .badge-purple {
+        @apply bg-purple-900/40 text-purple-300 ring-purple-500/30;
+    }
+
     /* ============================================
        TYPOGRAPHY - Premium Headers
        ============================================ */

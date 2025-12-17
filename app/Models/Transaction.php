@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -94,5 +95,21 @@ class Transaction extends Model
     {
         return $query->whereMonth('transaction_date', now()->month)
             ->whereYear('transaction_date', now()->year);
+    }
+
+    /**
+     * Get transaction items (products)
+     */
+    public function items(): HasMany
+    {
+        return $this->hasMany(TransactionItem::class);
+    }
+
+    /**
+     * Get debt payments linked to this transaction
+     */
+    public function debtPayments(): HasMany
+    {
+        return $this->hasMany(DebtPayment::class);
     }
 }
