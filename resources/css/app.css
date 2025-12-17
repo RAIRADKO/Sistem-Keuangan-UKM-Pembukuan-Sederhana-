@@ -866,4 +866,236 @@
         content: '';
         @apply absolute inset-0 rounded-full bg-rose-500 animate-ping;
     }
+
+    /* ============================================
+       TOAST NOTIFICATIONS - Modern Animated
+       ============================================ */
+    .toast-container {
+        @apply fixed top-4 right-4 z-[100] flex flex-col gap-3 max-w-sm w-full pointer-events-none;
+    }
+
+    .toast {
+        @apply relative bg-white rounded-2xl shadow-2xl p-4 pr-12 border overflow-hidden pointer-events-auto;
+        @apply transform translate-x-full opacity-0 transition-all duration-300 ease-out;
+        animation: slideInToast 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    .toast.toast-hiding {
+        animation: slideOutToast 0.3s cubic-bezier(0.4, 0, 1, 1) forwards;
+    }
+
+    .dark .toast {
+        @apply bg-slate-800 border-slate-700;
+    }
+
+    .toast-success {
+        @apply border-emerald-200;
+    }
+
+    .toast-success::before {
+        content: '';
+        @apply absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-emerald-400 to-teal-500;
+    }
+
+    .dark .toast-success {
+        @apply border-emerald-700;
+    }
+
+    .toast-error {
+        @apply border-rose-200;
+    }
+
+    .toast-error::before {
+        content: '';
+        @apply absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-rose-400 to-pink-500;
+    }
+
+    .dark .toast-error {
+        @apply border-rose-700;
+    }
+
+    .toast-info {
+        @apply border-cyan-200;
+    }
+
+    .toast-info::before {
+        content: '';
+        @apply absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-400 to-blue-500;
+    }
+
+    .dark .toast-info {
+        @apply border-cyan-700;
+    }
+
+    .toast-close {
+        @apply absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors;
+    }
+
+    .toast-progress {
+        @apply absolute bottom-0 left-0 h-1 bg-gradient-to-r from-cyan-400 to-teal-500;
+        animation: toastProgress 4s linear forwards;
+    }
+
+    .toast-success .toast-progress {
+        @apply bg-gradient-to-r from-emerald-400 to-teal-500;
+    }
+
+    .toast-error .toast-progress {
+        @apply bg-gradient-to-r from-rose-400 to-pink-500;
+    }
+
+    @keyframes slideInToast {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideOutToast {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        to {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+    }
+
+    @keyframes toastProgress {
+        from {
+            width: 100%;
+        }
+
+        to {
+            width: 0%;
+        }
+    }
+
+    /* ============================================
+       SKELETON LOADING - Shimmer Animation
+       ============================================ */
+    .skeleton-shimmer {
+        @apply relative overflow-hidden bg-slate-200 dark:bg-slate-700 rounded-lg;
+    }
+
+    .skeleton-shimmer::after {
+        content: '';
+        @apply absolute inset-0;
+        background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.4) 50%,
+                transparent 100%);
+        animation: shimmer 1.5s infinite;
+    }
+
+    .dark .skeleton-shimmer::after {
+        background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.1) 50%,
+                transparent 100%);
+    }
+
+    @keyframes shimmer {
+        0% {
+            transform: translateX(-100%);
+        }
+
+        100% {
+            transform: translateX(100%);
+        }
+    }
+
+    .skeleton-text {
+        @apply h-4 w-full skeleton-shimmer;
+    }
+
+    .skeleton-text-sm {
+        @apply h-3 w-3/4 skeleton-shimmer;
+    }
+
+    .skeleton-avatar {
+        @apply w-12 h-12 rounded-full skeleton-shimmer;
+    }
+
+    .skeleton-card {
+        @apply p-6 rounded-2xl skeleton-shimmer;
+    }
+
+    /* ============================================
+       BRAND GRADIENT - Consistent Branding
+       ============================================ */
+    .brand-gradient {
+        background: linear-gradient(135deg, #06B6D4 0%, #0891B2 50%, #0E7490 100%);
+    }
+
+    .brand-text-gradient {
+        background: linear-gradient(135deg, #06B6D4 0%, #0891B2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    /* ============================================
+       INTERACTIVE ELEMENTS - Smooth Transitions
+       ============================================ */
+    .interactive-element {
+        @apply transition-all duration-300 ease-out;
+    }
+
+    .interactive-element:hover {
+        transform: scale(1.02);
+    }
+
+    .interactive-element:active {
+        transform: scale(0.98);
+    }
+
+    /* ============================================
+       MOBILE BOTTOM NAV
+       ============================================ */
+    .mobile-bottom-nav {
+        @apply fixed bottom-0 left-0 right-0 bg-white/95 dark:bg-slate-800/95 backdrop-blur-lg border-t border-slate-200 dark:border-slate-700 lg:hidden z-40;
+    }
+
+    .mobile-bottom-nav-item {
+        @apply flex flex-col items-center justify-center py-2 text-slate-400 transition-colors duration-200;
+    }
+
+    .mobile-bottom-nav-item.active {
+        @apply text-cyan-600 dark:text-cyan-400;
+    }
+
+    .mobile-bottom-nav-item:hover {
+        @apply text-cyan-500;
+    }
+
+    .mobile-bottom-nav-fab {
+        @apply relative -mt-8 flex items-center justify-center;
+    }
+
+    .mobile-bottom-nav-fab-button {
+        @apply w-14 h-14 rounded-full bg-gradient-to-br from-cyan-500 to-teal-500 shadow-lg flex items-center justify-center text-white transition-transform duration-200;
+    }
+
+    .mobile-bottom-nav-fab-button:hover {
+        transform: scale(1.1);
+    }
+
+    .mobile-bottom-nav-fab-button:active {
+        transform: scale(0.95);
+    }
+
+    /* Mobile content padding */
+    @media (max-width: 1023px) {
+        .main-content {
+            padding-bottom: 5rem;
+        }
+    }
 }

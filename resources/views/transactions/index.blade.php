@@ -27,7 +27,7 @@
         <!-- Filters - Clean & minimal -->
         <div class="card mb-8 animate-fade-in-up" style="opacity: 0; animation-delay: 0.1s;">
             <div class="p-6">
-                <form method="GET" action="{{ route('transactions.index') }}" class="grid grid-cols-2 md:grid-cols-6 gap-4">
+                <form method="GET" action="{{ route('transactions.index') }}" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3 md:gap-4">
                     <div>
                         <label class="form-label">Tipe</label>
                         <select name="type" class="form-input">
@@ -150,13 +150,33 @@
                     {{ $transactions->links() }}
                 </div>
             @else
-                <div class="empty-state">
-                    <svg class="empty-state-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                    </svg>
-                    <p class="empty-state-title">Belum ada transaksi</p>
-                    <p class="empty-state-text">Mulai catat pemasukan dan pengeluaran Anda</p>
-                    <a href="{{ route('transactions.create') }}" class="btn btn-primary">Tambah Transaksi</a>
+                <div class="empty-state py-16">
+                    <!-- Animated Icon -->
+                    <div class="relative w-32 h-32 mx-auto mb-6">
+                        <div class="absolute inset-0 bg-gradient-to-br from-cyan-100 to-teal-100 dark:from-cyan-900/30 dark:to-teal-900/30 rounded-full animate-pulse"></div>
+                        <svg class="relative w-full h-full text-cyan-500 p-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                        </svg>
+                    </div>
+                    
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Belum ada transaksi</h3>
+                    <p class="text-slate-500 dark:text-slate-400 mb-6 max-w-sm mx-auto">Mulai catat pemasukan dan pengeluaran usaha Anda untuk melacak keuangan</p>
+                    
+                    <!-- Multiple CTAs -->
+                    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                        <a href="{{ route('transactions.create', ['type' => 'income']) }}" class="btn btn-success">
+                            <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                            </svg>
+                            Catat Pemasukan
+                        </a>
+                        <a href="{{ route('transactions.create', ['type' => 'expense']) }}" class="btn btn-danger">
+                            <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
+                            </svg>
+                            Catat Pengeluaran
+                        </a>
+                    </div>
                 </div>
             @endif
         </div>

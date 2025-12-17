@@ -25,7 +25,7 @@
         </div>
 
         <!-- Stats Grid - Premium Design -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 section">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 section">
             <!-- Total Income -->
             <div class="stat-card stat-card-income animate-fade-in-up stagger-1" style="opacity: 0;">
                 <div class="flex items-start justify-between">
@@ -61,7 +61,7 @@
             </div>
 
             <!-- Net Balance -->
-            <div class="stat-card stat-card-balance animate-fade-in-up stagger-3" style="opacity: 0;">
+            <div class="stat-card stat-card-balance animate-fade-in-up stagger-3 sm:col-span-2 lg:col-span-1" style="opacity: 0;">
                 <div class="flex items-start justify-between">
                     <div>
                         <p class="stat-label">Saldo Bersih</p>
@@ -76,6 +76,53 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- Quick Actions Widget -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8 animate-fade-in-up" style="opacity: 0; animation-delay: 0.35s;">
+            <a href="{{ route('transactions.create', ['type' => 'income']) }}" class="p-4 bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 rounded-xl border border-emerald-200 dark:border-emerald-800 hover:shadow-lg transition-all group interactive-element">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-emerald-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"/>
+                        </svg>
+                    </div>
+                    <span class="font-medium text-emerald-700 dark:text-emerald-300 text-sm">Pemasukan</span>
+                </div>
+            </a>
+            
+            <a href="{{ route('transactions.create', ['type' => 'expense']) }}" class="p-4 bg-gradient-to-br from-rose-50 to-pink-50 dark:from-rose-900/20 dark:to-pink-900/20 rounded-xl border border-rose-200 dark:border-rose-800 hover:shadow-lg transition-all group interactive-element">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-rose-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 13l-5 5m0 0l-5-5m5 5V6"/>
+                        </svg>
+                    </div>
+                    <span class="font-medium text-rose-700 dark:text-rose-300 text-sm">Pengeluaran</span>
+                </div>
+            </a>
+            
+            <a href="{{ route('pos.index') }}" class="p-4 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl border border-blue-200 dark:border-blue-800 hover:shadow-lg transition-all group interactive-element">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-blue-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
+                    </div>
+                    <span class="font-medium text-blue-700 dark:text-blue-300 text-sm">Kasir POS</span>
+                </div>
+            </a>
+            
+            <a href="{{ route('reports.profit-loss') }}" class="p-4 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl border border-purple-200 dark:border-purple-800 hover:shadow-lg transition-all group interactive-element">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-purple-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                    </div>
+                    <span class="font-medium text-purple-700 dark:text-purple-300 text-sm">Laporan</span>
+                </div>
+            </a>
         </div>
 
         <!-- Charts Section - Clean with generous whitespace -->
@@ -160,13 +207,33 @@
                     </table>
                 </div>
             @else
-                <div class="empty-state">
-                    <svg class="empty-state-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                    </svg>
-                    <p class="empty-state-title">Belum ada transaksi</p>
-                    <p class="empty-state-text">Mulai catat pemasukan dan pengeluaran Anda</p>
-                    <a href="{{ route('transactions.create') }}" class="btn btn-primary">Tambah Transaksi Pertama</a>
+                <div class="empty-state py-16">
+                    <!-- Animated Icon -->
+                    <div class="relative w-32 h-32 mx-auto mb-6">
+                        <div class="absolute inset-0 bg-gradient-to-br from-cyan-100 to-teal-100 dark:from-cyan-900/30 dark:to-teal-900/30 rounded-full animate-pulse"></div>
+                        <svg class="relative w-full h-full text-cyan-500 p-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                        </svg>
+                    </div>
+                    
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Belum ada transaksi</h3>
+                    <p class="text-slate-500 dark:text-slate-400 mb-6 max-w-sm mx-auto">Mulai catat pemasukan dan pengeluaran usaha Anda untuk melihat laporan keuangan</p>
+                    
+                    <!-- Multiple CTAs -->
+                    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                        <a href="{{ route('transactions.create', ['type' => 'income']) }}" class="btn btn-success">
+                            <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                            </svg>
+                            Catat Pemasukan
+                        </a>
+                        <a href="{{ route('transactions.create', ['type' => 'expense']) }}" class="btn btn-danger">
+                            <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
+                            </svg>
+                            Catat Pengeluaran
+                        </a>
+                    </div>
                 </div>
             @endif
         </div>
@@ -205,12 +272,16 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
                 plugins: {
                     legend: {
                         position: 'bottom',
                         labels: {
                             usePointStyle: true,
-                            padding: 24,
+                            padding: 20,
                             font: { size: 12, weight: '500' }
                         }
                     },
@@ -220,9 +291,17 @@
                         titleFont: { size: 13, weight: '600' },
                         bodyFont: { size: 12 },
                         cornerRadius: 10,
+                        displayColors: true,
                         callbacks: {
                             label: function(context) {
                                 return context.dataset.label + ': Rp ' + context.raw.toLocaleString('id-ID');
+                            },
+                            footer: function(items) {
+                                if (items.length >= 2) {
+                                    let selisih = items[0].raw - items[1].raw;
+                                    return 'Selisih: Rp ' + selisih.toLocaleString('id-ID');
+                                }
+                                return '';
                             }
                         }
                     }
@@ -230,13 +309,20 @@
                 scales: {
                     x: {
                         grid: { display: false },
-                        ticks: { font: { size: 11, weight: '500' } }
+                        ticks: { 
+                            font: { size: 11, weight: '500' },
+                            color: '#64748b'
+                        }
                     },
                     y: {
                         beginAtZero: true,
-                        grid: { color: 'rgba(0,0,0,0.04)' },
+                        grid: { 
+                            color: 'rgba(226, 232, 240, 0.5)',
+                            drawBorder: false
+                        },
                         ticks: {
                             font: { size: 11 },
+                            color: '#64748b',
                             callback: function(value) {
                                 if (value >= 1000000) return (value/1000000).toFixed(0) + 'jt';
                                 if (value >= 1000) return (value/1000).toFixed(0) + 'rb';
@@ -244,6 +330,10 @@
                             }
                         }
                     }
+                },
+                animation: {
+                    duration: 750,
+                    easing: 'easeInOutQuart'
                 }
             }
         });
