@@ -24,8 +24,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Store Management
+    Route::get('/stores/select', [StoreController::class, 'select'])->name('stores.select');
+    Route::get('/stores/join', [StoreController::class, 'showJoinForm'])->name('stores.join');
+    Route::post('/stores/join', [StoreController::class, 'join'])->name('stores.join.store');
     Route::resource('stores', StoreController::class);
     Route::post('/stores/{store}/switch', [StoreController::class, 'switch'])->name('stores.switch');
+    Route::post('/stores/{store}/regenerate-code', [StoreController::class, 'regenerateInviteCode'])->name('stores.regenerate-code');
 
     // Store Team Management
     Route::prefix('stores/{store}/team')->name('stores.team.')->group(function () {

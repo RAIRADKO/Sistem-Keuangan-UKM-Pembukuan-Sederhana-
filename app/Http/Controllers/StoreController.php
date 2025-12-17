@@ -9,6 +9,19 @@ use Illuminate\Support\Facades\Auth;
 class StoreController extends Controller
 {
     /**
+     * Display store selection page (Create or Join)
+     */
+    public function select()
+    {
+        // If user already has stores, redirect to stores index
+        if (Auth::user()->stores()->count() > 0) {
+            return redirect()->route('stores.index');
+        }
+
+        return view('stores.select');
+    }
+
+    /**
      * Display a listing of stores
      */
     public function index()
@@ -18,11 +31,21 @@ class StoreController extends Controller
     }
 
     /**
+     * Display the specified store
+     */
+    public function show(Store $store)
+    {
+        $this->authorizeStore($store);
+        return view('stores.show', compact('store'));
+    }
+
+    /**
      * Show the form for creating a new store
      */
     public function create()
     {
-        return view('stores.create');
+        $hasStores = Auth::user()->stores()->count() > 0;
+        return view('stores.create', compact('hasStores'));
     }
 
     /**
@@ -37,6 +60,9 @@ class StoreController extends Controller
             'phone' => 'nullable|string|max:20',
         ]);
 
+        // Generate unique invite code
+        $validated['invite_code'] = Store::generateInviteCode();
+
         $store = Store::create($validated);
 
         // Attach user as owner
@@ -50,6 +76,68 @@ class StoreController extends Controller
 
         return redirect()->route('dashboard')
             ->with('success', 'Toko berhasil dibuat!');
+    }
+
+    /**
+     * Show the form for joining a store
+     */
+    public function showJoinForm()
+    {
+        $hasStores = Auth::user()->stores()->count() > 0;
+        return view('stores.join', compact('hasStores'));
+    }
+
+    /**
+     * Join a store using invite code
+     */
+    public function join(Request $request)
+    {
+        $validated = $request->validate([
+            'invite_code' => 'required|string|size:8',
+        ], [
+            'invite_code.required' => 'Kode undangan harus diisi.',
+            'invite_code.size' => 'Kode undangan harus 8 karakter.',
+        ]);
+
+        $store = Store::findByInviteCode($validated['invite_code']);
+
+        if (!$store) {
+            return back()
+                ->withInput()
+                ->withErrors(['invite_code' => 'Kode undangan tidak valid atau tidak ditemukan.']);
+        }
+
+        // Check if user is already a member
+        if ($store->users()->where('user_id', Auth::id())->exists()) {
+            return back()
+                ->withInput()
+                ->withErrors(['invite_code' => 'Anda sudah menjadi anggota toko ini.']);
+        }
+
+        // Add user as kasir
+        $store->users()->attach(Auth::id(), ['role' => 'kasir']);
+
+        // Set as current store
+        session(['current_store_id' => $store->id]);
+
+        return redirect()->route('dashboard')
+            ->with('success', "Berhasil bergabung ke toko: {$store->name} sebagai Kasir!");
+    }
+
+    /**
+     * Regenerate invite code for a store (owner only)
+     */
+    public function regenerateInviteCode(Store $store)
+    {
+        $this->authorizeStore($store);
+
+        if (!Auth::user()->isOwnerOf($store)) {
+            abort(403, 'Hanya pemilik toko yang dapat regenerate kode undangan.');
+        }
+
+        $newCode = $store->regenerateInviteCode();
+
+        return back()->with('success', "Kode undangan berhasil di-regenerate: {$newCode}");
     }
 
     /**

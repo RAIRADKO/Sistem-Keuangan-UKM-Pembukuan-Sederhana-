@@ -46,7 +46,11 @@
                         </div>
 
                         <div class="flex gap-3 pt-4">
-                            <a href="{{ route('stores.index') }}" class="btn btn-secondary flex-1">Batal</a>
+                            @if($hasStores)
+                                <a href="{{ route('stores.index') }}" class="btn btn-secondary flex-1">Batal</a>
+                            @else
+                                <a href="{{ route('stores.select') }}" class="btn btn-secondary flex-1">Kembali</a>
+                            @endif
                             <button type="submit" class="btn btn-primary flex-1">Simpan Toko</button>
                         </div>
                     </form>

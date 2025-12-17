@@ -23,6 +23,63 @@
             </div>
         </div>
 
+        <!-- Invite Code Section (Owner Only) -->
+        <div class="card animate-fade-in-up mb-6" style="opacity: 0; animation-delay: 0.05s;">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100">Kode Undangan Toko</h3>
+                    <span class="badge badge-warning text-xs">Rahasia - Hanya untuk Owner</span>
+                </div>
+                
+                <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">
+                    Bagikan kode ini kepada orang yang ingin bergabung ke toko Anda. Mereka akan otomatis menjadi <strong>Kasir</strong>.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row items-center gap-4">
+                    <div class="flex-1 w-full">
+                        <div class="relative">
+                            <input type="text" 
+                                   id="inviteCode" 
+                                   value="{{ $store->invite_code }}" 
+                                   readonly 
+                                   class="form-input text-center text-2xl tracking-[0.3em] font-mono font-bold bg-slate-50 dark:bg-slate-800 border-2 border-dashed border-slate-300 dark:border-slate-600"
+                                   style="letter-spacing: 0.3em;">
+                            <button type="button" 
+                                    onclick="copyInviteCode()" 
+                                    class="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-slate-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors"
+                                    title="Salin kode">
+                                <svg id="copyIcon" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                                </svg>
+                                <svg id="checkIcon" class="w-5 h-5 hidden text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <form method="POST" action="{{ route('stores.regenerate-code', $store) }}" onsubmit="return confirm('Regenerate kode undangan? Kode lama tidak akan bisa digunakan lagi.')">
+                        @csrf
+                        <button type="submit" class="btn btn-secondary whitespace-nowrap">
+                            <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                            </svg>
+                            Regenerate
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="mt-4 p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg">
+                    <p class="text-xs text-amber-700 dark:text-amber-300 flex items-start gap-2">
+                        <svg class="w-4 h-4 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                        </svg>
+                        Jangan bagikan kode ini secara publik. Siapa pun dengan kode ini dapat bergabung ke toko Anda.
+                    </p>
+                </div>
+            </div>
+        </div>
+
         <!-- Team Members -->
         <div class="card animate-fade-in-up" style="opacity: 0; animation-delay: 0.1s;">
             <div class="p-6">
@@ -126,4 +183,36 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function copyInviteCode() {
+            const codeInput = document.getElementById('inviteCode');
+            const copyIcon = document.getElementById('copyIcon');
+            const checkIcon = document.getElementById('checkIcon');
+            
+            navigator.clipboard.writeText(codeInput.value).then(() => {
+                // Show success state
+                copyIcon.classList.add('hidden');
+                checkIcon.classList.remove('hidden');
+                
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    copyIcon.classList.remove('hidden');
+                    checkIcon.classList.add('hidden');
+                }, 2000);
+            }).catch(err => {
+                // Fallback for older browsers
+                codeInput.select();
+                document.execCommand('copy');
+                
+                copyIcon.classList.add('hidden');
+                checkIcon.classList.remove('hidden');
+                
+                setTimeout(() => {
+                    copyIcon.classList.remove('hidden');
+                    checkIcon.classList.add('hidden');
+                }, 2000);
+            });
+        }
+    </script>
 </x-app-layout>

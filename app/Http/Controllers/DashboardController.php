@@ -15,8 +15,8 @@ class DashboardController extends Controller
         $store = $user->currentStore();
 
         if (!$store) {
-            return redirect()->route('stores.create')
-                ->with('info', 'Silakan buat toko terlebih dahulu.');
+            return redirect()->route('stores.select')
+                ->with('info', 'Silakan buat atau gabung ke toko terlebih dahulu.');
         }
 
         // Current month data

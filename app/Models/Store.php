@@ -16,6 +16,7 @@ class Store extends Model
         'address',
         'business_type',
         'phone',
+        'invite_code',
     ];
 
     /**
@@ -156,5 +157,37 @@ class Store extends Model
             ->active()
             ->lowStock()
             ->get();
+    }
+
+    /**
+     * Generate a unique 8-character invite code
+     */
+    public static function generateInviteCode(): string
+    {
+        do {
+            // Generate uppercase alphanumeric code (easy to read/type)
+            $code = strtoupper(substr(str_shuffle('ABCDEFGHJKLMNPQRSTUVWXYZ23456789'), 0, 8));
+        } while (self::where('invite_code', $code)->exists());
+
+        return $code;
+    }
+
+    /**
+     * Regenerate the invite code for this store
+     */
+    public function regenerateInviteCode(): string
+    {
+        $this->invite_code = self::generateInviteCode();
+        $this->save();
+
+        return $this->invite_code;
+    }
+
+    /**
+     * Find store by invite code
+     */
+    public static function findByInviteCode(string $code): ?self
+    {
+        return self::where('invite_code', strtoupper($code))->first();
     }
 }
